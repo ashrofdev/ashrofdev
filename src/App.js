@@ -9,6 +9,8 @@ import BlogPage from './BlogPage/BlogPage';
 import ServicesPage from './ServicesPage.js/Service';
 import ContactPage from './Contact/Contact';
 import { Person1, Person2, Person3 } from './LittleComponents/LittleComponents'
+import { firebaseDB } from './Server';
+
 
 //  https://accounts.google.com/b/0/DisplayUnlockCaptcha
 
@@ -97,24 +99,30 @@ class App extends Component {
     document.querySelector('.pop').classList.add('popup')
 
 
-    fetch('https://portapi.herokuapp.com/contact-me')
-    .then((data)=>{
-      document.querySelector('.pop').textContent = 'SENT'
-      setTimeout(() => {
-        document.querySelector('.pop').classList.remove('popup')
-      }, 2000);
-      console.log(data)
-    })
-    .catch((err)=>{
-      document.querySelector('.pop').textContent = 'FAILED'
-      document.querySelector('.pop').classList.add('fail')
-      setTimeout(() => {
-        document.querySelector('.pop').classList.remove('popup')
-        document.querySelector('.pop').classList.remove('fail')
-      }, 2000);
-      console.log(err)
-    })
+    // fetch('https://portapi.herokuapp.com/contact-me')
+    // .then((data)=>{
+    //   document.querySelector('.pop').textContent = 'SENT'
+    //   setTimeout(() => {
+    //     document.querySelector('.pop').classList.remove('popup')
+    //   }, 2000);
+    //   console.log(data)
+    // })
+    // .catch((err)=>{
+    //   document.querySelector('.pop').textContent = 'FAILED'
+    //   document.querySelector('.pop').classList.add('fail')
+    //   setTimeout(() => {
+    //     document.querySelector('.pop').classList.remove('popup')
+    //     document.querySelector('.pop').classList.remove('fail')
+    //   }, 2000);
+    //   console.log(err)
+    // })
 
+
+    firebaseDB.ref('portfolio').push().set({
+        name: document.querySelector('.name').value,
+        mail: document.querySelector('.mail').value,
+        message: document.querySelector('.msg').value
+    })
    
   }
 
